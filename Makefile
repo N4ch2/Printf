@@ -28,17 +28,14 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
 
-all : makelibft bonus
+all : $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) -c  $< -o $(<:.c=.o) -I ./libft
 
-makelibft :
-			make -C ./libft
-
-bonus : makelibft $(OBJS)
-	@cp ./libft/libft.a $(NAME)
-	@ar rcs $(NAME) $(OBJS)
+$(NAME) : $(OBJS)
+	@make -C ./libft
+	@ar rcs $(NAME) libft/*.o $(OBJS)
 	@echo "$(NAME) created"
 	@ranlib $(NAME)
 	@echo "$(NAME) indexed"
