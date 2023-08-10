@@ -21,6 +21,7 @@ SRCS = ./utils/ft_printf_char.c\
 	   ft_printf.c\
 
 OBJS = $(SRCS:.c=.o)
+LIBFT = ./libft/libft.a
 
 NAME = libftprintf.a
 
@@ -33,12 +34,14 @@ all : $(NAME)
 .c.o:
 	$(CC) $(CFLAGS) -c  $< -o $(<:.c=.o) -I ./libft
 
-$(NAME) : $(OBJS)
-	@make -C ./libft
+$(NAME) : $(OBJS) $(LIBFT)
 	@ar rcs $(NAME) libft/*.o $(OBJS)
 	@echo "$(NAME) created"
 	@ranlib $(NAME)
 	@echo "$(NAME) indexed"
+
+$(LIBFT):
+	@make -C ./libft
 
 clean :
 	@cd libft && make clean
